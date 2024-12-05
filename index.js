@@ -1,29 +1,31 @@
+require('dotenv').config()
 const express = require("express");
 const { connectToMongoDB } = require("./connect");
 const URL = require("./models/url");
+const cors = require('cors');
 
 const app = express();
-const PORT = 8001;
+const PORT = process.env.PORT;
 
-// Routes
-const urlRoute = require("./routes/url");
+
+
+ const urlRoute = require("./routes/url");
 const userRoute = require("./routes/user");
 
-// Connect to MongoDB
-connectToMongoDB("mongodb://localhost:27017/short-url").then(() =>
+ connectToMongoDB(process.env.MONGO).then(() =>
   console.log("MongoDB connected")
 );
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+
 
 // Routes
 app.use("/url", urlRoute);
 app.use("/user", userRoute);
 
-// Redirect based on short URL
-app.get("/:shortId", async (req, res) => {
+ app.get("/:shortId", async (req, res) => {
   try {
     const shortId = req.params.shortId;
 
@@ -44,5 +46,4 @@ app.get("/:shortId", async (req, res) => {
   }
 });
 
-// Start server
-app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));
+ app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`));

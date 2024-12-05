@@ -1,3 +1,5 @@
+
+require('dotenv').config()
 const shortid = require("shortid");
 const URL = require("../models/url");
 
@@ -7,17 +9,15 @@ async function handleGenerateNewShortURL(req, res) {
 
   const shortID = shortid();
 
-  // Create the new shortened URL entry in the database
-  await URL.create({
+   await URL.create({
     shortId: shortID,
     redirectURL: body.url,
     visitHistory: [],
   });
 
-  // Respond with the shortened URL
-  return res.status(201).json({
-    shortUrl: `http://localhost:8001/${shortID}`,  // Full shortened URL
-    shortId: shortID,                           // Just the short ID
+   return res.status(201).json({
+    shortUrl: `http://localhost:${process.env.PORT}/${shortID}`,   
+    shortId: shortID,                            
   });
 }
 
