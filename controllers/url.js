@@ -16,10 +16,12 @@ async function handleGenerateNewShortURL(req, res) {
   });
 
    return res.status(201).json({
-    shortUrl: `http://13.201.224.19:${process.env.PORT}/${shortID}`,   
+    shortUrl: `http://13.203.2.40:${process.env.PORT}/${shortID}`,   
     shortId: shortID,                            
   });
 }
+
+
 
 async function handleGetAnalytics(req, res) {
   const shortId = req.params.shortId;
