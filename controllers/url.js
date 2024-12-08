@@ -16,7 +16,7 @@ async function handleGenerateNewShortURL(req, res) {
   });
 
    return res.status(201).json({
-    shortUrl: `http://trmzip.club/${shortID}`,   
+    shortUrl: `https://trmzip.club/${shortID}`,   
     shortId: shortID,                            
   });
 }
